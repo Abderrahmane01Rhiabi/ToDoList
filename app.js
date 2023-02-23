@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-var items = ["Buy Food","Cook Food","Ear Food"]; //scoop
+let items = ["Buy Food","Cook Food","Ear Food"]; //scoop
+let workItems = [];
 
 const app = express();
 
@@ -12,31 +13,44 @@ app.use(express.static("public"));
 
 app.get("/",(req,res)=>{
 
-var today = new Date();
+    let today = new Date();
 
-var options = { 
-    weekday : "long",
-    day : "numeric",
-    month : "long"
-}
+    let options = { 
+            weekday : "long",
+            day : "numeric",
+            month : "long"
+        }
 
-const currentDay = today.toLocaleDateString("fr-FR", options);
+    let currentDay = today.toLocaleDateString("fr-FR", options);
 
 
     res.render("list", {
-        todayText : currentDay,
+        currentTitle : currentDay,
         newListItems : items
     })
 
 })
 
 app.post("/",(req,res) =>{
-    const item = req.body.newItem;
+    let item = req.body.newItem;
 
-    items.push(item);
+    console.log(req.body);
 
-    res.redirect("/");
+    if(req.body.list === "Work"){
+        workItems.push(item);
+        res.redirect("/work");
+    }else{
+        items.push(item);
+        res.redirect("/");
+    }
+})
 
+app.get("/work",(req,res) =>{
+
+    res.render("list", {
+        currentTitle : "Work list",
+        newListItems : workItems
+    })
 })
 
 app.listen(3000, ()=>{
