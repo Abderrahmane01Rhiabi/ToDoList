@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const date = require(__dirname+"/date.js")
 
-let items = ["Buy Food","Cook Food","Ear Food"]; //scoop
-let workItems = [];
+
+const items = ["Buy Food","Cook Food","Ear Food"]; //scoop
+const workItems = [];
 
 const app = express();
 
@@ -13,16 +15,8 @@ app.use(express.static("public"));
 
 app.get("/",(req,res)=>{
 
-    let today = new Date();
-
-    let options = { 
-            weekday : "long",
-            day : "numeric",
-            month : "long"
-        }
-
-    let currentDay = today.toLocaleDateString("fr-FR", options);
-
+    
+    const currentDay = date.getDate();
 
     res.render("list", {
         currentTitle : currentDay,
@@ -32,7 +26,7 @@ app.get("/",(req,res)=>{
 })
 
 app.post("/",(req,res) =>{
-    let item = req.body.newItem;
+    const item = req.body.newItem;
 
     console.log(req.body);
 
@@ -51,6 +45,10 @@ app.get("/work",(req,res) =>{
         currentTitle : "Work list",
         newListItems : workItems
     })
+})
+
+app.get("/about", (req,res) =>{
+    res.render("about")
 })
 
 app.listen(3000, ()=>{
