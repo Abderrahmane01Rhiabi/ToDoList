@@ -11,6 +11,7 @@
                     <input type="checkbox" name="ItemToBeDeleted" value="<%= value._id %>" onChange="this.form.submit()">
                     <p> <%= value.name %></p>
                 </div>
+                <input type="hidden" name="listName" value=<%= currentTitle %>>
             </form>
         <%}%>
     
