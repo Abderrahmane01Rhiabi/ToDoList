@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 mongoose.set({});
-mongoose.connect("mongodb://127.0.0.1:27017/todolistDb");
+mongoose.connect("mongodb+srv://rhiabi:rhiabi@rh.2aapw.mongodb.net/todolistDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemsSchema = {
     name: String
@@ -33,6 +33,8 @@ const listsSchema = {
 
 const List = mongoose.model("List", listsSchema);
 
+
+//for root /
 app.get("/", (req, res) => {
 
 
